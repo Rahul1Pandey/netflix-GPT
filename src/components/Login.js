@@ -3,10 +3,10 @@ import Header from './Header'
 import {checkValidData} from "../utils/validate"
 import {createUserWithEmailAndPassword ,signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../utils/firebase"
-import { useNavigate } from 'react-router';
 import {updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { profilepicture,BG_URL } from '../utils/constant';
 
 
 
@@ -15,7 +15,7 @@ const Login = () => {
 
   const [isSignInForm,setisSignInForm] = useState(true)
   const [errorMessage ,seterrorMessage] = useState()
-  const Navigate = useNavigate()
+ 
   const dispatch = useDispatch()
 
   const name = useRef(null)
@@ -25,8 +25,8 @@ const Login = () => {
   const handleButtonClick=()=>{
     // validateForm 
     
-    console.log(email.current.value)
-    console.log(password.current.value)
+    // console.log(email.current.value)
+    // console.log(password.current.value)
 
     const message = checkValidData(email.current.value,password.current.value)
     seterrorMessage(message)
@@ -39,7 +39,8 @@ const Login = () => {
     // Signed up 
       const user = userCredential.user;
       updateProfile(user, {
-        displayName: name.current.value , photoURL: "https://avatars.githubusercontent.com/u/142569909?v=4"
+        displayName: name.current.value , 
+        photoURL: profilepicture
       })
       .then(() => {
         const {uid, email, displayName, photoURL} = auth.currentUser;
@@ -49,7 +50,7 @@ const Login = () => {
             email: email,
             displayName: displayName,
             photoURL: photoURL}))
-        Navigate("/browse")
+        
       }).catch((error) => {
         seterrorMessage(error.message)
       });
@@ -68,8 +69,8 @@ const Login = () => {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        console.log(user)
-        Navigate("/browse")
+        // console.log(user)
+      
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -87,7 +88,7 @@ const toggleSignInForm = ()=>{
     <div>
      <Header />
      <div className='absolute'>
-        <img src="https://assets.nflxext.com/ffe/siteui/vlv3/150c4b42-11f6-4576-a00f-c631308b1e43/web/IN-en-20241216-TRIFECTA-perspective_915a9055-68ad-4e81-b19a-442f1cd134dc_large.jpg" alt="bg-logo"></img>
+        <img src={BG_URL} alt="bg-logo"></img>
      </div>
      <form  onSubmit={(e)=>e.preventDefault() }
       className='bg-black absolute w-4/12 my-36 mx-auto right-0 left-0 text-white px-20 
