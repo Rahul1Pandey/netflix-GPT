@@ -32,6 +32,9 @@
 - Build Movies card
 - TMDBImage CDN URL
 - UsePopularMovies Custom Hook
+- Gpt search Page
+- Gpt search bar
+- Multi-lang feature in our App
 
 # features
 - Login/Sign up
